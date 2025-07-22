@@ -1,0 +1,15 @@
+@startuml
+
+class Moto{
+    - patente:int
+
+}
+class Marca{
+    - nombre:int
+}
+class Modelo{
+    -nombre:int
+}
+Moto *-- Marca
+Marca  *-- "*" Modelo
+@enduml
