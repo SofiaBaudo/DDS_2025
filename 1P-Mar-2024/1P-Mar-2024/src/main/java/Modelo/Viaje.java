@@ -9,4 +9,5 @@ public class Viaje {
     private CaminoNoConvencional camino;
     private List<TipoPuntoInteres> intereses;
     private Moto moto;
+    private Feedback feedback;
 }

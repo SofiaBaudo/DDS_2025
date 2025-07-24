@@ -2,14 +2,84 @@
 
 class Moto{
     - patente:int
-
+    - marca: Marca
+    - modelo:Modelo
+    - fotografias: List<Fotografia>
+}
+class Fotografia{
+    - descripcion: String
+    - ruta: String
 }
 class Marca{
     - nombre:int
 }
 class Modelo{
     -nombre:int
+    -marca: Marca
 }
-Moto *-- Marca
+
+class Motoquero{
+    -nombre:String
+    -categoria:Categoria
+    -kmRecorridos: int
+}
+class Categoria{
+    -nombre: String
+    +kmLimites(moto: Moto): void
+}
+class Camino{
+    -nombre: String
+    -descripcion: String
+    -fotografias: List<Fotografia>
+    -dificultad: NivelDificultad
+    -terreno: TipoTerreno
+    -duracion: Int
+    -distancia: Int
+    -tiempoSalida: Int
+    -tiempoEntrada: Int
+    -CategoriasPermitidas: List<Categoria>
+}
+enum NivelDificultad{
+    PRINCIPIANTE
+    MEDIO
+    AVANZADO
+    EXTREMO
+}
+enum TipoTerreno{
+    ASFALTO
+    RIPIO
+    MIXTO
+}
+class PuntoInteres{
+    -nombrePunto: String
+    -tipo : TipoPuntoInteres
+    -descripcion:String
+    -ubicacionGeografica: Int
+    -fotografias: List<Fotografia>
+}
+class TipoPuntoInteres{
+    - nomprePunto: String
+}
+class Viaje{
+    -motoquero: Motoquero
+    -FechaARealizar: LocalDateTime
+    -camino: Camino
+    -intereses: List<TipoPuntoInteres>
+    -moto: Moto
+    -feedback: Feedback
+}
+Viaje --> "*" TipoPuntoInteres
+Moto --> viaje
+Motoquero --> Viaje
+Viaje "*" --> Camino
+PuntoInteres --> TipoPuntoInteres
+Camino "*"--> TipoTerreno
+Camino "*" --> NivelDificultad
+Camino --> "*" Fotografia
+Camino --> "*"Categoria
+Moto --> "*"Fotografia
+Moto "*"*-- Motoquero
+Motoquero "*" --> Categoria
+Moto "*" *-- Marca
 Marca  *-- "*" Modelo
 @enduml

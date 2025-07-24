@@ -1,0 +1,81 @@
+@startuml
+
+class Juego{
+    -nombre: String
+    -requerimientos: List<String>
+    -memoria: Int
+    -almacenamiento: Int
+    -precio: Int
+    -genero: Genero
+    -DCLs: List<JuegoDCL>
+    -atributos: List<Atributo>
+}
+
+class JuegoDCL {
+    -nombre: String
+    -precioDeVenta: int
+    -juego:Juego
+}
+
+class Atributo{
+    -nombre: String
+    -obligatorio:boolean
+    -cargado: boolean
+}
+
+class Genero{
+    -nombre: String
+    -caracteristicas: List<Atributo>
+    +agregarAtributo():void
+}
+class Compra{
+    -juegoComprado: Juego
+    -juegoDCL: JuegoDCL
+    -medioDePago: medioDePago
+    -fechaCompra: LocalDateTime
+}
+interface MedioDePago{
+    -nombre: String
+    -comprador: Miembro
+}
+class Prestamo{
+    -miembroPrestor: Miembro
+    -juegoPrestado: Juego
+    -fechaLimite: LocalDateTime
+}
+class DetectorAntifraude{
+    -estrategias: List<estrategiasFraude>
+    +usuariosQueCometenFraude(List<Miembro>): List<Miembro>
+}
+interface ChequeoAntiFraude{
+    -cantidadPrestamos: Int
+    -estrategia
+    +CometeFraude(Miembro m):Boolean
+}
+class estrategia10Prestamos implements ChequeoAntiFraude{
+}
+class estrategia400Prestamos implements ChequeoAntiFraude{
+}
+class estrategia2Anios implements ChequeoAntiFraude{
+}
+class Miembro{
+    -nombre: String
+    -juegosAdquiridos: List<Juegos>
+    -prestamosHechos: Int
+    -prestamosHechos: List<Prestamo>
+}
+class cronJob{
+}
+MedioDePago --> Miembro
+Miembro --> "*"DetectorAntifraude
+Miembro --* "*" Prestamo
+cronJob --> DetectorAntifraude
+DetectorAntifraude o--> ChequeoAntiFraude
+Juego --* Prestamo
+MedioDePago *-- Compra
+Compra *-- Juego
+Juego "*" --> Genero
+Genero --> "*"Atributo
+Juego --> "*" Atributo
+Juego --> "*"JuegoDCL
+@enduml
